@@ -1,0 +1,72 @@
+class Solution {
+public:
+    int give_area(int heights[],int n){
+        stack<int>st;
+        int left_smaller[n];
+        int right_smaller[n];
+        for(int i=0;i<n;i++){
+            while(!st.empty() and heights[st.top()]>=heights[i]){
+                st.pop();
+            }
+            if(!st.empty()){
+                left_smaller[i]=st.top();
+            }else{
+                left_smaller[i]=-1;
+            }
+            st.push(i);
+        }
+        while(st.size()>0){
+            st.pop();
+        }
+        for(int i=n-1;i>=0;i--){
+            while(!st.empty() and heights[st.top()]>=heights[i]){
+                st.pop();
+            }
+            if(!st.empty()){
+                right_smaller[i]=st.top();
+            }else{
+                right_smaller[i]=n;
+            }
+            st.push(i);
+        }
+         int ans=INT_MIN;
+        for(int i=0;i<n;i++){
+            int width=(right_smaller[i]-left_smaller[i])-1;
+            int height=heights[i];
+            ans=max(ans,width*height);
+        }
+        return ans;
+    }
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        int row=matrix.size();
+        int col=matrix[0].size();
+        int heights[col];
+        int n=col;
+        int ans=0;
+        for(int i=0;i<row;i++){
+            int count=0;
+              for(int j=0;j<col;j++){
+                 if(i==0){
+                      if(matrix[i][j]=='1'){
+                        heights[j]=1;
+                      }else{
+                        heights[j]=0;
+                      }
+                 }else{
+                    if(matrix[i][j]=='0'){
+                        heights[j]=0;
+                    }else{
+                        heights[j]++;
+                    }
+                 }
+              }
+              ans=max(ans,give_area(heights,n));
+              
+        }
+        return ans;
+       
+        
+      
+       
+    }
+};
