@@ -1,0 +1,55 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        // need to improve way of coding
+        stack<long long>st;
+        for(int i=0;i<tokens.size();i++){
+            string t=tokens[i];
+            if(t.size()==1){
+                
+                 long long int res;
+                 if(t[0]=='-'){
+                     long long int first_n=st.top();st.pop();
+                 long long int second_n=st.top();st.pop();
+                    res=second_n-first_n;
+                    st.push(res);
+                 }else if(t[0]=='+'){
+                    long long int first_n=st.top();st.pop();
+                 long long int second_n=st.top();st.pop();
+                         res=second_n+first_n;
+                         st.push(res);
+                 }else if(t[0]=='*'){
+                          long long int first_n=st.top();st.pop();
+                 long long int second_n=st.top();st.pop();
+                    
+                       res=second_n*first_n;
+                       st.push(res);
+                 }else if(t[0]=='/'){
+                    long long int first_n=st.top();st.pop();
+                 long long int second_n=st.top();st.pop();
+                    res=second_n/first_n;
+                    st.push(res);
+                 }else{
+                        long long int d=t[0]-'0';
+                         st.push(d);
+                 }
+                 
+            }else{
+                long long int n=0;
+                long long int sign=1;
+               
+                for(int j=0;j<t.size();j++){
+                     if(t[j]=='-'){
+                        sign=-1;
+                     }else{
+                       long long int d=t[j]-'0';
+                         n=n*10+d;
+                     }
+                }
+                n*=sign;
+                st.push(n);
+            }
+        }
+        return (int)st.top();
+    }
+};
