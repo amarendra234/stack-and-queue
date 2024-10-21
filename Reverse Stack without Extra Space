@@ -1,0 +1,21 @@
+ void Insertatbottom(stack<int>&st,int ele){
+       if(st.empty()){
+           st.push(ele);
+           return;
+       }
+       int element=st.top();
+       st.pop();
+       Insertatbottom(st,ele);
+       st.push(element);
+   }
+    void Reverse(stack<int> &St){
+        if(St.empty()){
+            return;
+        }
+        int top_ele=St.top();
+        St.pop();
+        //St.push(top_ele);
+        // insert at bottom
+        Reverse(St);
+        Insertatbottom(St,top_ele);
+    }
